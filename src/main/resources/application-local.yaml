@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/marker?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&connectTimeout=5000&socketTimeout=5000&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+
+#  data:
+#    redis:
+#      host: 192.168.100.129
+#      port: 10001
+#      database: 0
+#      password: 123456
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+
+  api-docs:
+    path: /v3/api-docs
+
+  group-configs:
+    - group: default
+      paths-to-match: /**
+      packages-to-scan: cn.wscsoft.backend.common.controller

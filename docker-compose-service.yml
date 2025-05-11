@@ -1,0 +1,21 @@
+name: backend_service
+services:
+  sgkq-service-user:
+    container_name: backend-service
+    build:
+      context: .
+      dockerfile: Dockerfile-app
+      args:
+        JAR_NAME: backend
+        JAR_VERSION: "1.0"
+    environment: [ ]
+    ports:
+      - "10100:10100"
+    networks:
+      - sgkq
+    restart: always
+
+networks:
+  backend:
+    external: true
+    driver: bridge

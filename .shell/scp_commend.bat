@@ -1,0 +1,1 @@
+scp ./.shell/one_step_base.sh root@192.168.100.129:/one_step_bash.sh

@@ -1,0 +1,17 @@
+FROM ghcr.io/graalvm/native-image:ol8-java17 as builder
+
+WORKDIR /app
+COPY . .
+
+# 构建 native 可执行文件，指定主类和输出文件名
+RUN ./mvnw -Pnative package \
+ && native-image \
+    -cp target/backend-0.0.1-SNAPSHOT.jar \
+    -H:Name=demo \
+    -H:Class=com.example.MainApplication
+
+FROM oraclelinux:8-slim
+WORKDIR /app
+COPY --from=builder /app/demo .
+
+ENTRYPOINT ["./demo"]

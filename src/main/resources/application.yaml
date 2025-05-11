@@ -1,0 +1,50 @@
+server:
+  servlet:
+    context-path: /api
+  error:
+    whitelabel:
+      enabled: false
+spring:
+  application:
+    name: backend
+  profiles:
+    active: local
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  main:
+    lazy-initialization: true
+
+  datasource:
+    hikari:
+        initialization-fail-timeout: 0
+  aot:
+    enabled: true
+  sql:
+    init:
+      mode: never
+token:
+  expire: 10000000
+# 微信配置
+wechat:
+  appId: xxxxxxx
+  appSecret: xxxxxxxxx
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: is_delete
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+async:
+  executor:
+    thread:
+      corePoolSize: 4
+      maxPoolSize: 8
+      queueCapacity: 1000
+      keepAliveSeconds: 30
+      namePrefix: spring-async-

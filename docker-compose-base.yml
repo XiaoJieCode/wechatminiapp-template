@@ -1,0 +1,65 @@
+name: backend
+services:
+
+  backend-redis:
+    image: redis:latest
+    container_name: backend-redis
+    command: [ "redis-server", "--requirepass", "d9jd932g4l02dl3daw0" ]
+    ports:
+      - "10001:6379"
+    networks:
+      - backend
+    restart: always
+
+  backend-mysql:
+    image: mysql:8.0.26
+    build:
+      context: .
+      dockerfile: Dockerfile-mysql
+    container_name: backend-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=sgkq
+    ports:
+      - "10000:3306"
+    volumes:
+      - /server/prod/docker/mysql/data:/var/lib/mysql
+      - /server/prod/docker/mysql/log:/var/log/mysql
+    command: --default-authentication-plugin=mysql_native_password
+    networks:
+      - backend
+    restart: always
+
+  sgkq-minio:
+    image: minio/minio
+    container_name: backend-minio
+    ports:
+      - "10002:9000"      # Web 端口
+      - "10003:9001"      # 控制台端口
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: admin123
+    command: server /data --console-address ":9001"
+    volumes:
+      - /server/prod/docker/minio/data:/data
+    networks:
+      - backend
+    restart: always
+
+  backend-rabbitmq:
+    image: rabbitmq:3.11-management
+    container_name: backend-rabbitmq
+    ports:
+      - "10005:15672"  # 管理页面
+      - "10004:5672"    # 消息通信端口
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin123
+    networks:
+      - backend
+    restart: always
+
+networks:
+  backend:
+    external: true
+    driver: bridge
