@@ -4,6 +4,8 @@ server:
   error:
     whitelabel:
       enabled: false
+  tomcat:
+    max-swallow-size: 200MB
 spring:
   application:
     name: backend
@@ -23,6 +25,11 @@ spring:
   sql:
     init:
       mode: never
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 210MB
+      file-size-threshold: 2MB
 token:
   expire: 10000000
 # 微信配置

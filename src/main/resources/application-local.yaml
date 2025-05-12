@@ -24,3 +24,12 @@ springdoc:
     - group: default
       paths-to-match: /**
       packages-to-scan: cn.wscsoft.backend.common.controller
+
+
+upload:
+  storage: minio
+  minio:
+    bucket: markers
+    endpoint: http://localhost:9000
+    accessKey: 5KYQfceFRCTUc2Rd3LfD  # TODO 配置minio
+    secretKey: SwLK94W4qwjWE7jZlSwnpoHNMbrKHK322HtvAGuB #TODO

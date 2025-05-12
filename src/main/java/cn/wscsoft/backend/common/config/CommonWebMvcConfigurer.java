@@ -30,7 +30,9 @@ public class CommonWebMvcConfigurer implements WebMvcConfigurer {
     @Resource
     private HttpLogRequestInterceptor httpLogRequestInterceptor;
     @Resource
-    private ContextRequestInterceptor contextRequestInterceptor;
+    private AccessInterceptor accessInterceptor;
+    @Resource
+    private JwtGatewayFilter jwtGatewayFilter;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -38,8 +40,10 @@ public class CommonWebMvcConfigurer implements WebMvcConfigurer {
         registry.addInterceptor(httpLogRequestInterceptor)
                 .addPathPatterns("/**");  // 拦截所有请求
         // context 功能
-        registry.addInterceptor(contextRequestInterceptor)
-                .addPathPatterns("/api");
+        registry.addInterceptor(accessInterceptor)
+                .addPathPatterns("/**");
+        registry.addInterceptor(jwtGatewayFilter)
+                .addPathPatterns("/**");
     }
 
 }
